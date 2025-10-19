@@ -47,11 +47,13 @@ if exist "%WEB_DIR%\WEB-INF\web.xml" (
     exit /b 1
 )
 
-REM Copier pages statiques
-if exist "%WEB_DIR%\index.html" (
-    copy "%WEB_DIR%\index.html" "%BUILD_DIR%\"
+REM Copier toutes les pages HTML statiques
+if exist "%WEB_DIR%\*.html" (
+    echo 📄 Copie des fichiers HTML depuis "%WEB_DIR%" vers "%BUILD_DIR%"...
+    copy "%WEB_DIR%\*.html" "%BUILD_DIR%\" >nul
+    echo ✅ Copie terminée.
 ) else (
-    echo ⚠ Aucun index.html trouvé
+    echo ⚠ Aucun fichier HTML trouvé dans "%WEB_DIR%"
 )
 
 if exist "%WEB_DIR%\web" (
@@ -80,7 +82,7 @@ if exist "%TOMCAT_WEBAPPS%\%APP_NAME%" rmdir /s /q "%TOMCAT_WEBAPPS%\%APP_NAME%"
 move "%WAR_FILE%" "%TOMCAT_WEBAPPS%\"
 
 REM Redémarrer Tomcat
-echo Arrêt de Tomcat...
+@REM echo Arrêt de Tomcat...
 @REM call "%TOMCAT_HOME%\bin\shutdown.bat"
 @REM timeout /t 3 /nobreak >nul
 
